@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cgf-converter", "cgf-converter\cgf-converter.csproj", "{CF5688EE-1E51-4371-B16A-DF4CBE4FC393}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E42B72A-C90C-4AAF-A344-8BD124866BDB} = {7E42B72A-C90C-4AAF-A344-8BD124866BDB}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgfConverter", "CgfConverter\CgfConverter.csproj", "{7E42B72A-C90C-4AAF-A344-8BD124866BDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgfConverterTests", "CgfConverterIntegrationTests\CgfConverterTests.csproj", "{2E40A418-2553-44B7-80EE-031FC94FA4EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgfConverterTestingConsole", "CgfConverterTestingConsole\CgfConverterTestingConsole.csproj", "{B3A24561-55A0-4124-8F1C-6A26F20360B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02B37E78-2794-42F9-955C-35B7D6581897}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		dev_dolkensp|Any CPU = dev_dolkensp|Any CPU
+		dev_markemp|Any CPU = dev_markemp|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF5688EE-1E51-4371-B16A-DF4CBE4FC393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5688EE-1E51-4371-B16A-DF4CBE4FC393}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF5688EE-1E51-4371-B16A-DF4CBE4FC393}.dev_dolkensp|Any CPU.ActiveCfg = dev_dolkensp|Any CPU
+		{CF5688EE-1E51-4371-B16A-DF4CBE4FC393}.dev_dolkensp|Any CPU.Build.0 = dev_dolkensp|Any CPU
+		{CF5688EE-1E51-4371-B16A-DF4CBE4FC393}.dev_markemp|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5688EE-1E51-4371-B16A-DF4CBE4FC393}.dev_markemp|Any CPU.Build.0 = Debug|Any CPU
+		{CF5688EE-1E51-4371-B16A-DF4CBE4FC393}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF5688EE-1E51-4371-B16A-DF4CBE4FC393}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E42B72A-C90C-4AAF-A344-8BD124866BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E42B72A-C90C-4AAF-A344-8BD124866BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E42B72A-C90C-4AAF-A344-8BD124866BDB}.dev_dolkensp|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E42B72A-C90C-4AAF-A344-8BD124866BDB}.dev_dolkensp|Any CPU.Build.0 = Debug|Any CPU
+		{7E42B72A-C90C-4AAF-A344-8BD124866BDB}.dev_markemp|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E42B72A-C90C-4AAF-A344-8BD124866BDB}.dev_markemp|Any CPU.Build.0 = Debug|Any CPU
+		{7E42B72A-C90C-4AAF-A344-8BD124866BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E42B72A-C90C-4AAF-A344-8BD124866BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E40A418-2553-44B7-80EE-031FC94FA4EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E40A418-2553-44B7-80EE-031FC94FA4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E40A418-2553-44B7-80EE-031FC94FA4EC}.dev_dolkensp|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E40A418-2553-44B7-80EE-031FC94FA4EC}.dev_dolkensp|Any CPU.Build.0 = Debug|Any CPU
+		{2E40A418-2553-44B7-80EE-031FC94FA4EC}.dev_markemp|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E40A418-2553-44B7-80EE-031FC94FA4EC}.dev_markemp|Any CPU.Build.0 = Debug|Any CPU
+		{2E40A418-2553-44B7-80EE-031FC94FA4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E40A418-2553-44B7-80EE-031FC94FA4EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A24561-55A0-4124-8F1C-6A26F20360B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A24561-55A0-4124-8F1C-6A26F20360B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A24561-55A0-4124-8F1C-6A26F20360B7}.dev_dolkensp|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A24561-55A0-4124-8F1C-6A26F20360B7}.dev_dolkensp|Any CPU.Build.0 = Debug|Any CPU
+		{B3A24561-55A0-4124-8F1C-6A26F20360B7}.dev_markemp|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A24561-55A0-4124-8F1C-6A26F20360B7}.dev_markemp|Any CPU.Build.0 = Debug|Any CPU
+		{B3A24561-55A0-4124-8F1C-6A26F20360B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A24561-55A0-4124-8F1C-6A26F20360B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA9C2289-7FBD-4B44-95D5-026B965368BB}
+	EndGlobalSection
+EndGlobal
