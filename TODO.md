@@ -1,4 +1,7 @@
 # TODO
+
+NOTE: Original list from Lune - subject to change.
+
 ## Problems
 - [ ] Morph Targets, physics bones & most proxies dont get imported
 - [ ] cgf weapon meshes get imported with the wrong origin, which throws out slot helper locations etc. These can just be moved into the correct position.
