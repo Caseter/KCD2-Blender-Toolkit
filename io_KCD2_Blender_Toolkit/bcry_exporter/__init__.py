@@ -30,37 +30,12 @@
 # License:     GPLv2+
 # ------------------------------------------------------------------------------
 
+VERSION = '5.6.7'
 
-bl_info = {
-    "name": "BCRY Exporter",
-    "author": "Özkan Afacan; Angelo J. Miner; Mikołaj Milej; Daniel White; Oscar Martin Garcia; Duo Oratar; David Marcelis; Leonid Bilousov; Wang, Zhen",
-    "blender": (2, 93, 2),
-    "version": (5, 6, 7),
-    "location": "BCRY Exporter Menu",
-    "description": "Export assets from Blender to CryEngine V",
-    "warning": "",
-    "wiki_url": "http://bcry.afcstudio.org/documents/",
-    "tracker_url": "https://github.com/AFCStudio/BCryExporter/issues",
-    "support": 'OFFICIAL',
-    "category": "Import-Export"}
+import bpy
+from . import export, export_animations, exceptions, udp, utils, material_utils, desc
 
-# old wiki url: http://wiki.blender.org/
-# index.php/Extensions:2.5/Py/Scripts/Import-Export/CryEngine3
-
-VERSION = '.'.join(str(n) for n in bl_info["version"])
-
-
-if "bpy" in locals():
-    import importlib
-    importlib.reload(export)
-    importlib.reload(exceptions)
-    importlib.reload(udp)
-    importlib.reload(utils)
-    importlib.reload(material_utils)
-    importlib.reload(desc)
-else:
-    import bpy
-    from . import export, export_animations, exceptions, udp, utils, material_utils, desc
+modules = [export, export_animations, exceptions, udp, utils, material_utils, desc]
 
 # import configparser
 import math
@@ -4674,6 +4649,10 @@ def unregister_bcry_icons():
 def register():
     register_bcry_icons()
 
+    for module in modules:
+        if hasattr(module, "register"):
+            module.register()
+
     for classToRegister in get_classes_to_register():
         bpy.utils.register_class(classToRegister)
 
@@ -4684,6 +4663,10 @@ def register():
 
 def unregister():
     unregister_bcry_icons()
+
+    for module in reversed(modules):
+        if hasattr(module, "unregister"):
+            module.unregister()
 
     # Be sure to unregister operators.
     for classToRegister in get_classes_to_register():
