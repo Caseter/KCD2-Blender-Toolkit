@@ -9,15 +9,15 @@ Unlike Lune's original repo, this version is built into a single plugin folder r
 
 Once you download the ZIP folder, in Blender go to Edit > Preferences
 
-![Preferences](readmeimages\prefernces.png)
+![Preferences](readmeimages/prefernces.png)
 
 Then go to Add-ons section, at the top right click the down arrown then Install from Disk
 
-![Addons](readmeimages\addons.png)
+![Addons](readmeimages/addons.png)
 
 On the new window that opens select the ZIP folder you downloaded from releases, then clikc Install frm Disk
 
-![ZIP](readmeimages\ZIP.png)
+![ZIP](readmeimages/ZIP.png)
 
 Once installed, find (or search at the top) the KCD2 Blender Toolkit plugin. Expand the panel and under Preferences direct it to your games Data folder, e.g:
 
@@ -25,15 +25,15 @@ Once installed, find (or search at the top) the KCD2 Blender Toolkit plugin. Exp
 D:\SteamLibrary\steamapps\common\KingdomComeDeliverance2\Data
 </pre>
 
-![Settings](readmeimages\settings.png)
+![Settings](readmeimages/settings.png)
 
 Once done, you can close the addons/preferences panel. In the blender viewport if you press N on your keyboard you should now see the two panels on your right:
 
-![Panels](readmeimages\panels.png)
+![Panels](readmeimages/panels.png)
 
 The final set up step is to direct BCry to your Resource Compiler (RC.exe from the official modding tools):
 
-![Config](readmeimages\config.png)
+![Config](readmeimages/config.png)
 
 First click on `Find RC` and direct it to wherever you installed your modding tools, then into `\Tools\rc\rc.exe`
 
