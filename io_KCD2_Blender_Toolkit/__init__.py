@@ -15,6 +15,8 @@ from bpy.types import AddonPreferences, PropertyGroup
 from bpy.props import StringProperty, IntProperty, FloatProperty, EnumProperty
 from . import importers, material_handler, ui
 from .bcry_exporter import register as bcry_register, unregister as bcry_unregister
+from .bcry_exporter import export, configuration
+from .bcry_exporter import __init__ as bcry_exporter_init
 
 class AddonSettings(AddonPreferences):
     bl_idname = __name__
@@ -30,7 +32,7 @@ class AddonSettings(AddonPreferences):
         layout = self.layout
         layout.prop(self, "filepath")
 
-modules = [importers, ui, material_handler]
+modules = [importers, ui, material_handler, export]
 classes = [AddonSettings]
 
 def register():

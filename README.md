@@ -11,11 +11,11 @@ Once you download the ZIP folder, in Blender go to Edit > Preferences
 
 ![Preferences](readmeimages/prefernces.png)
 
-Then go to Add-ons section, at the top right click the down arrown then Install from Disk
+Then go to Add-ons section, at the top right click the down arrow then Install from Disk
 
 ![Addons](readmeimages/addons.png)
 
-On the new window that opens select the ZIP folder you downloaded from releases, then clikc Install frm Disk
+On the new window that opens select the ZIP folder you downloaded from releases, then click Install frm Disk
 
 ![ZIP](readmeimages/ZIP.png)
 
