@@ -317,3 +317,4 @@ OpenCover/
 *.dds.*
 *.mtl
 
+/io_KCD2_Blender_Toolkit/bcry_exporter/__pycache__
