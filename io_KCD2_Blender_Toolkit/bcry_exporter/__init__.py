@@ -30,12 +30,10 @@
 # License:     GPLv2+
 # ------------------------------------------------------------------------------
 
-VERSION = '5.6.7'
+VERSION = "5.6.7"
 
 import bpy
 from . import export, export_animations, exceptions, udp, utils, material_utils, desc
-
-modules = [export, export_animations, exceptions, udp, utils, material_utils, desc]
 
 # import configparser
 import math
@@ -4649,10 +4647,6 @@ def unregister_bcry_icons():
 def register():
     register_bcry_icons()
 
-    for module in modules:
-        if hasattr(module, "register"):
-            module.register()
-
     for classToRegister in get_classes_to_register():
         bpy.utils.register_class(classToRegister)
 
@@ -4663,10 +4657,6 @@ def register():
 
 def unregister():
     unregister_bcry_icons()
-
-    for module in reversed(modules):
-        if hasattr(module, "unregister"):
-            module.unregister()
 
     # Be sure to unregister operators.
     for classToRegister in get_classes_to_register():

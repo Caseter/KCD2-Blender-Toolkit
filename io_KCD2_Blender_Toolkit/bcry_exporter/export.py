@@ -14,8 +14,15 @@
 # ------------------------------------------------------------------------------
 
 
-import bpy
-from . import utils, export_materials, udp, exceptions
+if "bpy" in locals():
+    import importlib
+    importlib.reload(utils)
+    importlib.reload(export_materials)
+    importlib.reload(udp)
+    importlib.reload(exceptions)
+else:
+    import bpy
+    from . import utils, export_materials, udp, exceptions
 
 import copy
 import os
@@ -38,24 +45,7 @@ from .utils import join
 
 import math
 
-class CrytekDaeExporter(bpy.types.Operator, ExportHelper):
-
-    bl_idname = "export_scene.crytek_dae"
-    bl_label = "Crytek DAE Exporter"
-    filename_ext = ".dae"
-
-    def execute(self, context):
-        self.scene = context.scene
-        self.start_time = time.time()
-
-        if not self.filepath.lower().endswith(".dae"):
-            self.filepath += ".dae"
-
-        self.export_scene()
-        self.cleanup()
-
-        self.report({'INFO'}, f"Export finished in {round(time.time() - self.start_time, 3)}s")
-        return {'FINISHED'}
+class CrytekDaeExporter:
 
     def __init__(self, config):
         self._config = config

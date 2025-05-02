@@ -18,6 +18,15 @@ class UI_Import(UI_BasePanel):
         layout.operator("import_scene.kcd2_skin", text="Import Skin (.skin)")
         layout.operator("import_scene.kcd2_cgf", text="Import CGF (.cgf)")
 
+def menu_func_import_collada(self, context):
+    self.layout.operator("import_scene.kcd2_collada", text="Import COLLADA (.dae)")
+        
+def menu_func_import_skin(self, context):
+    self.layout.operator("import_scene.kcd2_skin", text="KCD2 Skin (.skin)")
+
+def menu_func_import_cgf(self, context):
+    self.layout.operator("import_scene.kcd2_cgf", text="KCD2 CGF (.cgf)")
+
 class UI_Materials(UI_BasePanel):
     bl_label = "Materials"
     bl_idname = "KCD2_PT_Materials"
@@ -35,7 +44,7 @@ class UI_Materials(UI_BasePanel):
                     files = []
                 
                 if files:
-                    layout.prop(context.scene, "mtl_file_dropdown", text="Select MTL File")
+                    layout.prop(context.scene, "mtl_file_dropdown", text="MTL File")
                 else:
                     layout.label(text="No .mtl files found")
             else:
@@ -102,6 +111,9 @@ classes = [UI_Import, UI_Materials, UI_Export]
 
 def register():
     register_properties()
+    bpy.types.TOPBAR_MT_file_import.append(menu_func_import_collada)
+    bpy.types.TOPBAR_MT_file_import.append(menu_func_import_skin)
+    bpy.types.TOPBAR_MT_file_import.append(menu_func_import_cgf)
     for cls in classes:
         bpy.utils.register_class(cls)
 
@@ -109,3 +121,6 @@ def unregister():
     for cls in classes:
         bpy.utils.unregister_class(cls)
     unregister_properties()
+    bpy.types.TOPBAR_MT_file_import.remove(menu_func_import_collada)
+    bpy.types.TOPBAR_MT_file_import.remove(menu_func_import_skin)
+    bpy.types.TOPBAR_MT_file_import.remove(menu_func_import_cgf)

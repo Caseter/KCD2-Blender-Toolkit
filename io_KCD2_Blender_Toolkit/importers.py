@@ -127,15 +127,10 @@ classes = (
 
 def register():
     for cls in classes:
-        try:
+        if not hasattr(bpy.types, cls.__name__):
             bpy.utils.register_class(cls)
-        except ValueError:
-            bpy.utils.unregister_class(cls)
-            bpy.utils.register_class(cls)
+    
 
 def unregister():
     for cls in reversed(classes):
-        try:
-            bpy.utils.unregister_class(cls)
-        except RuntimeError:
-            pass  #Prevent crash if fails
+        bpy.utils.unregister_class(cls)

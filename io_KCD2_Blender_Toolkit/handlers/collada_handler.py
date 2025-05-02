@@ -27,10 +27,10 @@ def import_collada(filepath, context, operator):
 
         elif obj.type == 'MESH':
             mesh = obj.data
+            imported_mesh = obj
 
             if glb_armature:
                 obj.parent = glb_armature
-
                 armature_modifier = obj.modifiers.new(name="Armature", type='ARMATURE')
                 armature_modifier.object = glb_armature
 
@@ -38,7 +38,30 @@ def import_collada(filepath, context, operator):
             fix_material_slots(obj, filepath)
             set_smooth(mesh)
             create_export_node(operator)
-    
+        
+        elif obj.type == 'EMPTY':
+            obj.empty_display_size = 0.1 #Resize empty so it's not compensating
+
+            if "proxy" in obj.name.lower():
+            # Find the first mesh sibling that shares a parent or context
+                for mesh_obj in bpy.context.selected_objects:
+                    if mesh_obj.type == 'MESH':
+                        for c in obj.users_collection:
+                            c.objects.unlink(obj)
+                        for c in mesh_obj.users_collection:
+                            c.objects.link(obj)
+                        break
+    if glb_armature and imported_mesh:
+        def link_armature_to_mesh_collection():
+            mesh_colls = imported_mesh.users_collection
+            for c in list(glb_armature.users_collection):
+                c.objects.unlink(glb_armature)
+            for c in mesh_colls:
+                c.objects.link(glb_armature)
+            return None  # run once only
+
+        bpy.app.timers.register(link_armature_to_mesh_collection, first_interval=0.1)
+
     return obj
 
 
