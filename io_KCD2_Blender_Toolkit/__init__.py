@@ -13,6 +13,7 @@ from bpy_extras.io_utils import ImportHelper
 from bpy.types import AddonPreferences, PropertyGroup
 from bpy.props import StringProperty, IntProperty, FloatProperty, EnumProperty
 from . import importers, material_handler, ui
+from .handlers import pak_handler
 from .bcry_exporter import register as bcry_register, unregister as bcry_unregister
 
 class AddonSettings(AddonPreferences):
@@ -20,7 +21,7 @@ class AddonSettings(AddonPreferences):
 
     filepath: StringProperty(
         name="KCD2 Data Directory",
-        description="The folder of the extracted .paks",
+        description="The folder of the .paks",
         subtype='FILE_PATH',
         default=""
     )
@@ -29,7 +30,7 @@ class AddonSettings(AddonPreferences):
         layout = self.layout
         layout.prop(self, "filepath")
 
-modules = [importers, ui, material_handler]
+modules = [importers, ui, material_handler, pak_handler]
 classes = [AddonSettings]
 
 def register():

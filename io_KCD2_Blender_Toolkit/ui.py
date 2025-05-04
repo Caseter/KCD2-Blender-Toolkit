@@ -7,25 +7,34 @@ class UI_BasePanel(bpy.types.Panel):
     bl_region_type = 'UI'
     bl_category = "KCD2 Toolkit"
 
-
-class UI_Import(UI_BasePanel):
-    bl_label = "Import KCD2 Asset"
-    bl_idname = "KCD2_PT_Import"
+class UI_ImportPAK(UI_BasePanel):
+    bl_label = "Import from PAK"
+    bl_idname = "KCD2_PT_ImportPAK"
 
     def draw(self, context):
         layout = self.layout
-        layout.operator("import_scene.kcd2_collada", text="Import COLLADA (.dae)")
-        layout.operator("import_scene.kcd2_skin", text="Import Skin (.skin)")
-        layout.operator("import_scene.kcd2_cgf", text="Import CGF (.cgf)")
+        layout.operator("kcd2.browse_skin_files", icon="OUTLINER_COLLECTION", text="Import Skin (.skin)")
+        #layout.operator("kcd2.browse_cgf_files", icon="OUTLINER_COLLECTION", text="Import CGF (.cgf)")
 
-def menu_func_import_collada(self, context):
-    self.layout.operator("import_scene.kcd2_collada", text="Import COLLADA (.dae)")
+
+class UI_ImportLoose(UI_BasePanel):
+    bl_label = "Import Loose File"
+    bl_idname = "KCD2_PT_ImportLoose"
+
+    def draw(self, context):
+        layout = self.layout
+        layout.operator("import_scene.kcd2_skin", icon="FILE", text="Import Skin (.skin)")
+        layout.operator("import_scene.kcd2_cgf", icon="FILE", text="Import CGF (.cgf)")
+        layout.operator("import_scene.kcd2_collada", icon="FILE", text="Import COLLADA (.dae)")
         
 def menu_func_import_skin(self, context):
     self.layout.operator("import_scene.kcd2_skin", text="KCD2 Skin (.skin)")
 
 def menu_func_import_cgf(self, context):
     self.layout.operator("import_scene.kcd2_cgf", text="KCD2 CGF (.cgf)")
+
+def menu_func_import_collada(self, context):
+    self.layout.operator("import_scene.kcd2_collada", text="Import COLLADA (.dae)")
 
 class UI_Materials(UI_BasePanel):
     bl_label = "Materials"
@@ -50,9 +59,9 @@ class UI_Materials(UI_BasePanel):
             else:
                 layout.label(text="No mtl_directory found")
         else:
-            layout.label(text="No mesh selected or mtl_directory not found")
+            layout.label( text="No mesh selected or mtl_directory not found")
 
-        layout.operator("mtl.load_mtl", text="Load Material")
+        layout.operator("mtl.load_mtl", icon="MATERIAL", text="Load Material")
 
 
 class UI_Export(UI_BasePanel):
@@ -61,7 +70,7 @@ class UI_Export(UI_BasePanel):
 
     def draw(self, context):
         layout = self.layout
-        layout.operator("bcry.export_to_game", text="Export to KCD2")
+        layout.operator("bcry.export_to_game", icon="EXPORT", text="Export to KCD2")
 
 
 
@@ -107,7 +116,7 @@ def unregister_properties():
     del bpy.types.Scene.selected_mesh
     del bpy.types.Scene.mtl_file_dropdown
 
-classes = [UI_Import, UI_Materials, UI_Export]
+classes = [UI_ImportPAK, UI_ImportLoose, UI_Materials, UI_Export]
 
 def register():
     register_properties()
