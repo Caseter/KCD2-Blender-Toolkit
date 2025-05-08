@@ -9,7 +9,6 @@ class Material_KCD2_Load(bpy.types.Operator):
     bl_label = "Apply Materials"
 
     def execute(self, context):
-        #file_path = self.filepath
         file_path = context.scene.mtl_file_dropdown
         active_object = bpy.context.view_layer.objects.active
 
@@ -55,7 +54,7 @@ def load_texture(nodes, links, bsdf, texture_path, tex_type, texture_count):
     tex_node.location = (-300, 0)
 
     if texture_path.endswith("_ddna.tif"):
-        gloss_texture_path = texture_path.replace("_ddna.tif", "_ddna_glossMap.tif")
+        gloss_texture_path = texture_path.replace("_ddna.tif", "_ddna_alpha.tif") #Updated to work with the set up of KCDTextureExporter.
         if os.path.exists(gloss_texture_path):
             print(f"Found gloss map texture: {gloss_texture_path}")
             gloss_tex_node = nodes.new(type="ShaderNodeTexImage")

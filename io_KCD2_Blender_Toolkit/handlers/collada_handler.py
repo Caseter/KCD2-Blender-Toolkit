@@ -31,8 +31,24 @@ def import_collada(filepath, context, operator):
 
             if glb_armature:
                 obj.parent = glb_armature
-                armature_modifier = obj.modifiers.new(name="Armature", type='ARMATURE')
-                armature_modifier.object = glb_armature
+
+                # Check if a valid armature modifier already exists
+                found_valid = False
+                for mod in obj.modifiers:
+                    if mod.type == 'ARMATURE' and mod.object == glb_armature:
+                        found_valid = True
+                        break
+
+                if not found_valid:
+                    # Remove any broken/empty armature modifiers
+                    for mod in obj.modifiers:
+                        if mod.type == 'ARMATURE' and mod.object is None:
+                            obj.modifiers.remove(mod)
+
+                    # Add new working armature modifier
+                    armature_modifier = obj.modifiers.new(name="Armature", type='ARMATURE')
+                    armature_modifier.object = glb_armature
+                    armature_modifier.use_vertex_groups = True
 
             fix_vertex_colors(mesh)
             fix_material_slots(obj, filepath)

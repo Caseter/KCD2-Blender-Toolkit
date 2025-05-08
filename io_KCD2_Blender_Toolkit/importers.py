@@ -1,10 +1,7 @@
 import bpy
-import bmesh
-import math
 from bpy_extras.io_utils import ImportHelper
 from bpy.props import StringProperty, BoolProperty
 from .handlers import cgf_handler, skin_handler, collada_handler, glb_handler
-
 
 class Importer_KCD2_Collada(bpy.types.Operator, ImportHelper):
     """Import KCD2 Collada"""
@@ -49,7 +46,7 @@ class Importer_KCD2_SKIN(bpy.types.Operator, ImportHelper):
     glb_obj = None
     dae_obj = None
     
-    import_normals: BoolProperty(name="Import normals", description="Import normals", default=True)
+    import_normals: BoolProperty(name="Import Normals", description="Import Normals", default=True)
 
     def execute(self, context):
         skin_filepath = self.filepath
