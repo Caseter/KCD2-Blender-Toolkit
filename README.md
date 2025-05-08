@@ -15,7 +15,7 @@ Then go to Add-ons section, at the top right click the down arrow then Install f
 
 ![Addons](readmeimages/addons.png)
 
-On the new window that opens select the ZIP folder you downloaded from releases, then click Install frm Disk
+On the new window that opens select the ZIP folder you downloaded from releases, then click Install from Disk
 
 ![ZIP](readmeimages/ZIP.png)
 
