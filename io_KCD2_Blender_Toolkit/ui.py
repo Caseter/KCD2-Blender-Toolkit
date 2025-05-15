@@ -14,7 +14,8 @@ class UI_ImportPAK(UI_BasePanel):
     def draw(self, context):
         layout = self.layout
         layout.operator("kcd2.browse_skin_files", icon="OUTLINER_COLLECTION", text="Import Skin (.skin)")
-        #layout.operator("kcd2.browse_cgf_files", icon="OUTLINER_COLLECTION", text="Import CGF (.cgf)")
+        layout.operator("kcd2.browse_cgf_files", icon="OUTLINER_COLLECTION", text="Import CGF (.cgf)")
+        layout.operator("kcd2.browse_mtl_files", icon="OUTLINER_COLLECTION", text="Import Material (.mtl)")
 
 
 class UI_ImportLoose(UI_BasePanel):

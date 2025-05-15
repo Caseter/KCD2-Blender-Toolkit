@@ -88,56 +88,90 @@ def get_materials_from_object(obj):
     """Finds materials in Blender by pattern matching."""
     return [mat for mat in obj.data.materials]
 
-def apply_materials_from_mtl(filepath, context):
+def apply_materials_from_mtl(filepath, context, texture_dir=None):
+    """
+    Applies materials from an extracted .mtl to the active object.
+    :param filepath: Path to the .mtl file
+    :param context: Blender context
+    :param texture_dir: Optional override directory to load textures from
+    """
     tree = ET.parse(filepath)
     root = tree.getroot()
 
-    found_materials = get_materials_from_object(context.active_object)
+    active_obj = context.view_layer.objects.active
+    found_materials = get_materials_from_object(active_obj)
 
-    print("found materials length = ", len(found_materials))
+    print("found materials length =", len(found_materials))
     for mat in found_materials:
-        print("material found in blender: ", mat.name)
+        print("material found in blender:", mat.name)
 
     material_counter = 0
-    tex_directory = os.path.dirname(filepath)
+    # Choose where to look for textures
+    base_dir = texture_dir if texture_dir else os.path.dirname(filepath)
 
-    if root.tag == 'Material' and len(root.findall(".//SubMaterials")) == 0:
+    if root.tag == 'Material' and not root.findall(".//SubMaterials"):
+        # single-material MTL
         print("no submaterials")
         mat = found_materials[material_counter]
-
         nodes, links, bsdf = setup_material_nodes(mat)
 
         texture_count = 0
         for texture in root.findall(".//Texture"):
-            tex_path = texture.get("File", "").replace("\\", "/")
+            tex_file = texture.get("File", "").replace("\\", "/")
             tex_type = texture.get("Map", "")
-            full_texture_path = os.path.join(tex_directory, tex_path)
+            # always use basename so we ignore any "./" or subpaths
+            full_texture_path = os.path.join(base_dir, os.path.basename(tex_file))
+            print(f"Loading texture from: {full_texture_path}")
             load_texture(nodes, links, bsdf, full_texture_path, tex_type, texture_count)
-            texture_count = +1
-            
+            texture_count += 1
+
     else:
+        # multi-material MTL
         for mat_elem in root.findall(".//Material"):
             mat_name = mat_elem.get("Name")
-            print("material found in .mtl: ", mat_name)
+            print("material found in .mtl:", mat_name)
 
             if material_counter >= len(found_materials):
-                continue
+                break
 
             mat = found_materials[material_counter]
             material_counter += 1
 
             nodes, links, bsdf = setup_material_nodes(mat)
-
             texture_count = 0
+
             for texture in mat_elem.findall(".//Texture"):
-                tex_path = texture.get("File", "").replace("\\", "/")
+                tex_file = texture.get("File", "").replace("\\", "/")
                 tex_type = texture.get("Map", "")
-                full_texture_path = os.path.join(tex_directory, tex_path)
-
-                print("texture found: ", tex_path)
+                full_texture_path = os.path.join(base_dir, os.path.basename(tex_file))
+                print(f"Loading texture from: {full_texture_path}")
                 load_texture(nodes, links, bsdf, full_texture_path, tex_type, texture_count)
-                texture_count = +1
+                texture_count += 1
 
+
+def get_textures_from_mtl(mtl_path):
+    """
+    Reads the .mtl file and extracts all texture paths.
+    This will not check for their existence on disk.
+    """
+    textures = []
+    
+    if not os.path.exists(mtl_path):
+        print(f"[ERROR] MTL file not found: {mtl_path}")
+        return textures
+
+    try:
+        tree = ET.parse(mtl_path)
+        root = tree.getroot()
+
+        for texture in root.findall(".//Texture"):
+            tex_path = texture.get("File", "").replace("\\", "/")
+            if tex_path:
+                textures.append(tex_path)
+    except Exception as e:
+        print(f"[ERROR] Failed to read MTL file: {e}")
+
+    return textures
 
 # === Registration ===
 classes = (

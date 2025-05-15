@@ -1,7 +1,7 @@
 bl_info = {
     "name": "KCD2 Blender Toolkit",
     "author": "Created by Lune - Modified by Caseter",
-    "version": (1, 0),
+    "version": (0, 2, 6),
     "blender": (4, 3, 0),
     "location": "File > Import",
     "description": "A toolkit for working with KCD2 Assets",
@@ -26,9 +26,24 @@ class AddonSettings(AddonPreferences):
         default=""
     )
 
+    texturesoutput: StringProperty(
+        name="Textures Path (for conversion)",
+        description="The folder to use for textures for conversion from PAK",
+        subtype='FILE_PATH',
+        default=""
+    )
+
+    enable_update_check: BoolProperty(
+        name="Enable Update Check",
+        description="Enable or disable automatic update checks on startup (from GitHub)",
+        default=True
+    )
+
     def draw(self, context):
         layout = self.layout
+        layout.prop(self, "enable_update_check")
         layout.prop(self, "filepath")
+        layout.prop(self, "texturesoutput")
 
 modules = [importers, dependency, ui, material_handler, pak_handler]
 classes = [AddonSettings]

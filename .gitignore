@@ -316,3 +316,5 @@ OpenCover/
 *.dds
 *.dds.*
 *.mtl
+*.tif
+io_KCD2_Blender_Toolkit/External/KCDTextureExporter/Settings.xml

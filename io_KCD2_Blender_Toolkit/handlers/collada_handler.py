@@ -1,10 +1,8 @@
 import bpy
 import bmesh
-import math
 import xml.etree.ElementTree as ET
 import re
 import os
-
 
 def import_collada(filepath, context, operator):
     # Import the COLLADA file
@@ -77,7 +75,6 @@ def import_collada(filepath, context, operator):
             return None  # run once only
 
         bpy.app.timers.register(link_armature_to_mesh_collection, first_interval=0.1)
-
     return obj
 
 
