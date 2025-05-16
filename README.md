@@ -5,7 +5,7 @@ Uses Kamzik's KCD2 Texture Tool for converting textures from PAK - [GitHub](http
 
 Cryengine-Converter - Made by Heffay/Markemp and modified by Lune for KCD2 - [GitHub](https://github.com/Markemp/Cryengine-Converter)
 
-BCRYExporter - Various Authorts [GitHub](https://github.com/brickengineer/BCRYExporter)
+BCRYExporter - Various Authorts - [GitHub](https://github.com/brickengineer/BCRYExporter)
 
 Currently working as of Blender 4.3.
 
@@ -58,9 +58,11 @@ Once that is done you are ready to go. For some basic getting started info check
 # Current Features
 
 Current features:
-- Directly importing .skin & .cgf files
+- Importing .skin & .cgf files frm PAK
+- Importing loose .skin & .cgf files
+- Import MTL files & convert game textures
 - Vertex Colors (RGB and Alpha layers)
-- Exporting to .skin & .cgf using a custom branch of BCry Exporter
+- Exporting for KCD2
 
 Assets mostly working:
 - Weapons
