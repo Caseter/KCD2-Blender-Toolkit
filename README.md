@@ -1,11 +1,11 @@
 # Overview & Credits
 Original plugin created by [Lune](https://github.com/LuneMods/KCD2-Blender-Toolkit) - Forked by Caseter & maintained with the support of the community.
 
-Uses Kamzik's KCD2 Texture Tool for converting textures from PAK - [GitHub] (https://github.com/Kamzik123/KCDTextureExporter)
+Uses Kamzik's KCD2 Texture Tool for converting textures from PAK - [GitHub](https://github.com/Kamzik123/KCDTextureExporter)
 
-Cryengine-Converter - Made by Heffay/Markemp and modified by Lune for KCD2 - [GitHub] (https://github.com/Markemp/Cryengine-Converter)
+Cryengine-Converter - Made by Heffay/Markemp and modified by Lune for KCD2 - [GitHub](https://github.com/Markemp/Cryengine-Converter)
 
-BCRYExporter - Various Authorts [GitHub] (https://github.com/brickengineer/BCRYExporter)
+BCRYExporter - Various Authorts [GitHub](https://github.com/brickengineer/BCRYExporter)
 
 Currently working as of Blender 4.3.
 
