@@ -1,5 +1,11 @@
-# Overview
+# Overview & Credits
 Original plugin created by [Lune](https://github.com/LuneMods/KCD2-Blender-Toolkit) - Forked by Caseter & maintained with the support of the community.
+
+Uses Kamzik's KCD2 Texture Tool for converting textures from PAK - [GitHub] (https://github.com/Kamzik123/KCDTextureExporter)
+
+Cryengine-Converter - Made by Heffay/Markemp and modified by Lune for KCD2 - [GitHub] (https://github.com/Markemp/Cryengine-Converter)
+
+BCRYExporter - Various Authorts [GitHub] (https://github.com/brickengineer/BCRYExporter)
 
 Currently working as of Blender 4.3.
 
@@ -24,6 +30,8 @@ Once installed, find (or search at the top) the KCD2 Blender Toolkit plugin. Exp
 <pre>
 D:\SteamLibrary\steamapps\common\KingdomComeDeliverance2\Data
 </pre>
+
+If you wish to use the plugins texture import (from PAK) function, please also add a path for the Texture Path section.  NOTE: DO NOT PUT THIS AS YOUR GAME/DATA FOLDER - This should be a seperate folder just for extracted files.
 
 ![Settings](readmeimages/settings.png)
 

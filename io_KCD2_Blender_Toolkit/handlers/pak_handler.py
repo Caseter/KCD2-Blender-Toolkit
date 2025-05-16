@@ -538,9 +538,7 @@ classes = [KCD2_OT_browse_skin_files, KCD2_OT_browse_cgf_files, KCD2_OT_browse_m
 def register():
     for cls in classes:
         bpy.utils.register_class(cls)
-    print("[REGISTER] pak_handler.py registered")
 
 def unregister():
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
-    print("[UNREGISTER] pak_handler.py unregistered")
