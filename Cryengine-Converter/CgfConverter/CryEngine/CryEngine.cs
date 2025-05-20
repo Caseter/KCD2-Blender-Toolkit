@@ -33,8 +33,8 @@ public partial class CryEngine
     public string Name => Path.GetFileNameWithoutExtension(InputFile).ToLower();
     public List<Model> Models { get; internal set; } = new();
     public List<Model> Animations { get; internal set; } = new();
-    public ChunkNode RootNode { get; internal set; }
-    public ChunkCompiledBones Bones { get; internal set; }  // move to skinning info
+    public ChunkNode RootNode { get; internal set; } = default!;
+    public ChunkCompiledBones Bones { get; internal set; } = default!;  // move to skinning info
     public SkinningInfo? SkinningInfo { get; set; }
     public string InputFile { get; internal set; }
     public IPackFileSystem PackFileSystem { get; internal set; }
@@ -67,12 +67,12 @@ public partial class CryEngine
                 {
                     model.RootNode = rootNode = (rootNode ?? model.RootNode);
 
-                    foreach (ChunkNode node in model.ChunkMap.Values.Where(c => c.ChunkType == ChunkType.Node).Select(c => c as ChunkNode))
-                    {
+                    foreach (ChunkNode node in model.ChunkMap.Values.Where(c => c.ChunkType == ChunkType.Node).Cast<ChunkNode>())
+                        {
                         // Preserve existing parents
                         if (_nodeMap.ContainsKey(node.Name))
                         {
-                            ChunkNode parentNode = _nodeMap[node.Name].ParentNode;
+                            ChunkNode? parentNode = _nodeMap[node.Name].ParentNode;
 
                             if (parentNode is not null)
                                 parentNode = _nodeMap[parentNode.Name];
@@ -120,9 +120,9 @@ public partial class CryEngine
             var model = Model.FromStream(file, PackFileSystem.GetStream(file), true);
 
             if (RootNode is null)
-                RootNode = model.RootNode;  // This makes the assumption that we read the .cga file before the .cgam file.
+                RootNode = model.RootNode!;  // This makes the assumption that we read the .cga file before the .cgam file.
 
-            Bones = Bones ?? model.Bones;
+            Bones = Bones ?? model.Bones!;
             Models.Add(model);
         }
 
@@ -214,7 +214,7 @@ public partial class CryEngine
                 if (fullyQualifiedMaterialFile is not null)
                 {
                     var materials = MaterialUtilities.FromStream(PackFileSystem.GetStream(fullyQualifiedMaterialFile), materialFile, true);
-                    Materials.Add(key, materials);
+                    Materials.Add(key, materials!);
                 
                 }
                 else
@@ -246,7 +246,7 @@ public partial class CryEngine
                 if (fullyQualifiedMaterialFile is not null)
                 {
                     var materials = MaterialUtilities.FromStream(PackFileSystem.GetStream(fullyQualifiedMaterialFile), materialFile, true);
-                    Materials.Add(key, MaterialUtilities.FromStream(PackFileSystem.GetStream(fullyQualifiedMaterialFile), materialFile, true));
+                    Materials.Add(key, MaterialUtilities.FromStream(PackFileSystem.GetStream(fullyQualifiedMaterialFile), materialFile, true)!);
                 }
             }
         }
@@ -272,7 +272,7 @@ public partial class CryEngine
 
                 if (!Materials.ContainsKey(key))
                 {
-                    MaterialFiles.Add(materialFile);
+                    MaterialFiles!.Add(materialFile);
                     var materials = CreateDefaultMaterials(maxMats);
                     Materials.Add(key, materials);
                 }
@@ -287,7 +287,7 @@ public partial class CryEngine
         {
             foreach (var node in NodeMap.Values.Where(x => x.MaterialID != 0))
             {
-                if (MaterialFiles.Count == 1)
+                if (MaterialFiles!.Count == 1)
                 {
                     node.MaterialFileName = Path.GetFileNameWithoutExtension(MaterialFiles[0]);
                     node.Materials = Materials.Values.First();

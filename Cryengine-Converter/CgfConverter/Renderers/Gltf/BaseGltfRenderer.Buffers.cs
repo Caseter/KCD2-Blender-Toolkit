@@ -10,6 +10,8 @@ using CgfConverter.Renderers.Gltf.Models;
 using CgfConverter.Renderers.MaterialTextures;
 using Newtonsoft.Json;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace CgfConverter.Renderers.Gltf;
 
@@ -511,19 +513,19 @@ public partial class BaseGltfRenderer
                     buf[i].A = newAlphaByte;
             }
 
-            using var image = Image.LoadPixelData(buf, width, height);
+            using var image = Image.LoadPixelData<Rgba32>(buf, width, height);
             image.SaveAsPng(ms);
         }
         else
         {
             if (sourceAlphaMode == SourceAlphaModes.Enable)
             {
-                using var image = Image.LoadPixelData(raw.ToRgba32(), width, height);
+                using var image = Image.LoadPixelData<Rgba32>(raw.ToRgba32(), width, height);
                 image.SaveAsPng(ms);
             }
             else
             {
-                using var image = Image.LoadPixelData(raw.ToRgb24(), width, height);
+                using var image = Image.LoadPixelData<Rgb24>(raw.ToRgb24(), width, height);
                 image.SaveAsPng(ms);
             }
         }
