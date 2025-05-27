@@ -62,10 +62,11 @@ Current features:
 - Importing loose .skin & .cgf files
 - Import MTL files & convert game textures
 - Vertex Colors (RGB and Alpha layers)
+- Hiding Groups Import/Export (via Vertex Groups/Weight Painting)
 - Exporting for KCD2
 
 Assets mostly working:
 - Weapons
 - Helmets (need to modify the visor bone roll -180 deg in edit mode)
-- Clothing
+- Clothing (missing morphs)
 - Body Meshes (there might be some funky morphtargets missing but seems OK in practice?) 

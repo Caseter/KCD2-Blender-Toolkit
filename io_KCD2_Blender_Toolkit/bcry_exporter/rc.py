@@ -30,6 +30,15 @@ import threading
 import multiprocessing
 
 from .outpipe import bcPrint
+from xml.dom.minidom import Document
+from . import exceptions
+
+def createAttributes(node_name, attributes):
+    doc = Document()
+    node = doc.createElement(node_name)
+    for key, val in attributes.items():
+        node.setAttribute(key, val)
+    return node
 
 
 class RCInstance:
@@ -46,6 +55,7 @@ class RCInstance:
         converter = _DAEConverter(self.__config, source)
         conversion_thread = threading.Thread(target=converter)
         conversion_thread.start()
+        return conversion_thread
 
 
 class _DAEConverter:
@@ -249,14 +259,6 @@ class _DAEConverter:
         layer_doc.appendChild(object_layer)
 
         return layer_doc.toprettyxml(indent="    ")
-
-        def __createAttributes(self, node_name, attributes):
-            doc = Document()
-            node = doc.createElement(node_name)
-            for name, value in attributes.items():
-                node.setAttribute(name, value)
-
-            return node
 
 
 class _TIFConverter:

@@ -1,5 +1,6 @@
 import bpy
 import os
+from bpy.props import StringProperty
 
 # Base class for the panel
 class UI_BasePanel(bpy.types.Panel):
@@ -65,6 +66,127 @@ class UI_Materials(UI_BasePanel):
         layout.operator("mtl.load_mtl", icon="MATERIAL", text="Load Material")
 
 
+class OBJECT_OT_hidinggroup_select(bpy.types.Operator):
+    bl_idname = "object.hidinggroup_select"
+    bl_label = "Select Hiding Group"
+    bl_description = "Select all vertices in the specified hiding group"
+    group: StringProperty()
+
+    def execute(self, context):
+        obj = context.active_object
+        if not obj or obj.type != 'MESH':
+            self.report({'WARNING'}, "No mesh selected")
+            return {'CANCELLED'}
+        vg = obj.vertex_groups.get(self.group)
+        if not vg:
+            self.report({'ERROR'}, f"Group '{self.group}' not found")
+            return {'CANCELLED'}
+        obj.vertex_groups.active_index = obj.vertex_groups.find(self.group)
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='DESELECT')
+        bpy.ops.object.vertex_group_select()
+        return {'FINISHED'}
+
+class OBJECT_OT_hidinggroup_assign(bpy.types.Operator):
+    bl_idname = "object.hidinggroup_assign"
+    bl_label = "Assign to Hiding Group"
+    bl_description = "Add selected vertices to the specified hiding group"
+    group: StringProperty()
+
+    def execute(self, context):
+        obj = context.active_object
+        if not obj or obj.type != 'MESH':
+            self.report({'WARNING'}, "No mesh selected")
+            return {'CANCELLED'}
+        vg = obj.vertex_groups.get(self.group)
+        if not vg:
+            self.report({'ERROR'}, f"Group '{self.group}' not found")
+            return {'CANCELLED'}
+        obj.vertex_groups.active_index = obj.vertex_groups.find(self.group)
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.object.vertex_group_assign()
+        return {'FINISHED'}
+
+class OBJECT_OT_hidinggroup_remove(bpy.types.Operator):
+    bl_idname = "object.hidinggroup_remove"
+    bl_label = "Remove from Hiding Group"
+    bl_description = "Remove selected vertices from the specified hiding group"
+    group: StringProperty()
+
+    def execute(self, context):
+        obj = context.active_object
+        if not obj or obj.type != 'MESH':
+            self.report({'WARNING'}, "No mesh selected")
+            return {'CANCELLED'}
+        vg = obj.vertex_groups.get(self.group)
+        if not vg:
+            self.report({'ERROR'}, f"Group '{self.group}' not found")
+            return {'CANCELLED'}
+        obj.vertex_groups.active_index = obj.vertex_groups.find(self.group)
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.object.vertex_group_remove()
+        return {'FINISHED'}
+
+class OBJECT_OT_hidinggroup_isolate(bpy.types.Operator):
+    bl_idname = "object.hidinggroup_isolate"
+    bl_label = "Isolate Hiding Group"
+    bl_description = "Hide all vertices except those in the specified hiding group"
+    group: StringProperty()
+
+    def execute(self, context):
+        obj = context.active_object
+        if not obj or obj.type != 'MESH':
+            self.report({'WARNING'}, "No mesh selected")
+            return {'CANCELLED'}
+        vg_index = obj.vertex_groups.find(self.group)
+        if vg_index == -1:
+            self.report({'ERROR'}, f"Group '{self.group}' not found")
+            return {'CANCELLED'}
+        obj.vertex_groups.active_index = vg_index
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='DESELECT')
+        bpy.ops.object.vertex_group_select()
+        bpy.ops.mesh.hide(unselected=True)
+        return {'FINISHED'}
+
+
+class UI_HidingGroups(UI_BasePanel):
+    bl_label = "Hiding Groups"
+    bl_idname = "KCD2_PT_HidingGroups"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'KCD2 Toolkit'
+    bl_options = {'DEFAULT_CLOSED'}
+
+    def draw(self, context):
+        layout = self.layout
+        obj = context.active_object
+
+        # No Mesh
+        if not obj or obj.type != 'MESH':
+            layout.label(text="No mesh imported. Please import.", icon='INFO')
+            return
+        
+        # Mesh loaded but no hiding groups
+        hiding_groups = [vg for vg in obj.vertex_groups if vg.name.startswith("HidingGroup")]
+        if not hiding_groups:
+            layout.label(text="No hiding groups detected", icon='ERROR')
+            return
+        
+        # Else show the results
+        for vg in hiding_groups:
+            box = layout.box()
+            box.label(text=vg.name, icon='GROUP_VERTEX')
+            row = box.row(align=True)
+            op = row.operator("object.hidinggroup_select", text="Select")
+            op.group = vg.name
+            op = row.operator("object.hidinggroup_assign", text="Assign")
+            op.group = vg.name
+            op = row.operator("object.hidinggroup_remove", text="Remove")
+            op.group = vg.name
+            op = row.operator("object.hidinggroup_isolate", text="Isolate")
+            op.group = vg.name
+
 class UI_Export(UI_BasePanel):
     bl_label = "Export"
     bl_idname = "KCD2_PT_Export" 
@@ -117,7 +239,7 @@ def unregister_properties():
     del bpy.types.Scene.selected_mesh
     del bpy.types.Scene.mtl_file_dropdown
 
-classes = [UI_ImportPAK, UI_ImportLoose, UI_Materials, UI_Export]
+classes = [UI_ImportPAK, UI_ImportLoose, UI_Materials, OBJECT_OT_hidinggroup_select, OBJECT_OT_hidinggroup_assign, OBJECT_OT_hidinggroup_remove, OBJECT_OT_hidinggroup_isolate, UI_HidingGroups, UI_Export]
 
 def register():
     register_properties()

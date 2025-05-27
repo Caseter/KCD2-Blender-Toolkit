@@ -49,6 +49,9 @@ def import_collada(filepath, context, operator):
                     armature_modifier.use_vertex_groups = True
 
             fix_vertex_colors(mesh)
+            #Only runs hiding groups for .skin files. Don't think .cgf uses them.
+            if getattr(operator, "model_type", "") == "skin":
+                process_hiding_groups_import(obj)
             fix_material_slots(obj, filepath)
             set_smooth(mesh)
             create_export_node(operator)
@@ -181,3 +184,75 @@ def srgb_to_linear(srgb):
         return srgb / 12.92
     else:
         return ((srgb + 0.055) / 1.055) ** 2.4
+    
+#Hiding groups thing - kill me now
+def process_hiding_groups_import(obj):
+    mesh = obj.data
+    bm = bmesh.new()
+    bm.from_mesh(mesh)
+
+    #grab the "alpha" from import if it exists
+    vc_layer = bm.loops.layers.color.get("alpha")
+    if not vc_layer:
+        bm.free()
+        return
+    
+    #8 groups - clears old weights first
+    groups = []
+    for i in range(8):
+        name = f"HidingGroup{i+1}"
+        vg = obj.vertex_groups.get(name) or obj.vertex_groups.new(name=name)
+        vg.remove([v.index for v in mesh.vertices])
+        groups.append(vg)
+
+    # assign each vertex to the group based off the bit mask
+    for face in bm.faces:
+        for loop in face.loops:
+            vidix = loop.vert.index
+            alpha = loop[vc_layer][0] #0.0-1.0
+            mask = int(round(alpha * 255)) #0-255
+            for bit, vg in enumerate(groups):
+                if (mask >> bit) & 1:
+                    vg.add([vidix], 1.0, 'REPLACE')
+    bm.free()
+
+def process_hiding_groups_export(obj):
+    mesh = obj.data
+
+    # 1) Ensure an RGB layer (must NOT end in “alpha”)
+    rgb_vcol = mesh.vertex_colors.get("HidingMaskRGB") \
+            or mesh.vertex_colors.new(name="HidingMaskRGB")
+    # 2) Ensure an Alpha layer (must end in “Alpha”)
+    alpha_vcol = mesh.vertex_colors.get("HidingMaskAlpha") \
+              or mesh.vertex_colors.new(name="HidingMaskAlpha")
+
+    # 3) Bake both layers in one BMesh pass
+    bm = bmesh.new()
+    bm.from_mesh(mesh)
+    rgb_layer   = bm.loops.layers.color[rgb_vcol.name]
+    alpha_layer = bm.loops.layers.color[alpha_vcol.name]
+
+    for face in bm.faces:
+        for loop in face.loops:
+            # Fill RGB with white
+            loop[rgb_layer] = (1.0, 1.0, 1.0, 1.0)
+
+            # Compute 8-bit mask
+            vidx = loop.vert.index
+            mask = 0
+            for bit in range(8):
+                vg = obj.vertex_groups.get(f"HidingGroup{bit+1}")
+                if vg:
+                    try:
+                        if vg.weight(vidx) > 0.5:
+                            mask |= (1 << bit)
+                    except RuntimeError:
+                        pass
+
+            # Write mask into alpha
+            a = mask / 255.0
+            loop[alpha_layer] = (1.0, 1.0, 1.0, a)
+
+    # 4) Push back to the mesh and free
+    bm.to_mesh(mesh)
+    bm.free()
