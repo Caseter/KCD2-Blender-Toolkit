@@ -1,7 +1,7 @@
 bl_info = {
     "name": "KCD2 Blender Toolkit",
     "author": "Created by Lune - Modified by Caseter",
-    "version": (0, 2, 6),
+    "version": (0, 2, 7),
     "blender": (4, 3, 0),
     "location": "File > Import",
     "description": "A toolkit for working with KCD2 Assets",
