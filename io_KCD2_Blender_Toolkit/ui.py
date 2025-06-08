@@ -239,7 +239,9 @@ def unregister_properties():
     del bpy.types.Scene.selected_mesh
     del bpy.types.Scene.mtl_file_dropdown
 
-classes = [UI_ImportPAK, UI_ImportLoose, UI_Materials, OBJECT_OT_hidinggroup_select, OBJECT_OT_hidinggroup_assign, OBJECT_OT_hidinggroup_remove, OBJECT_OT_hidinggroup_isolate, UI_HidingGroups, UI_Export]
+
+#OBJECT_OT_hidinggroup_select, OBJECT_OT_hidinggroup_assign, OBJECT_OT_hidinggroup_remove, OBJECT_OT_hidinggroup_isolate, UI_HidingGroups
+classes = [UI_ImportPAK, UI_ImportLoose, UI_Materials, UI_Export]
 
 def register():
     register_properties()

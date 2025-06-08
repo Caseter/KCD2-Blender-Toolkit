@@ -35,7 +35,7 @@ from collections import OrderedDict
 from datetime import datetime
 from xml.dom.minidom import Document, Element, parse, parseString
 from ..handlers.skin_hidinggroups_patch import append_hiding_color_chunk
-from ..handlers.collada_handler import process_hiding_groups_export
+#from ..handlers.collada_handler import process_hiding_groups_export
 
 import bmesh
 from bpy_extras.io_utils import ExportHelper
@@ -98,21 +98,21 @@ class CrytekDaeExporter:
            thread.join()
 
         # Dodgy post-process adding the hiding groups to the .skin file.
-        dae_path  = bpy.path.ensure_ext(self._config.filepath, ".dae")
-        export_dir = os.path.dirname(dae_path)
+        #dae_path  = bpy.path.ensure_ext(self._config.filepath, ".dae")
+        #export_dir = os.path.dirname(dae_path)
 
         # For every mesh in export-node list, patch the .skin in place
-        for coll in utils.get_mesh_export_nodes(self._config.export_selected_nodes):
-            for obj in coll.objects:
-                if obj.type == 'MESH':
-                    # Bake the hiding-mask layers
-                    process_hiding_groups_export(obj)
-                    # Only patch if the .skin was actually generated
-                    skin_path = os.path.join(export_dir, f"{obj.name}.skin")
-                    if skin_path.lower().endswith(".skin") and os.path.exists(skin_path):
-                        append_hiding_color_chunk(obj, skin_path)
-                    else:
-                        print(f"[Hiding Groups] Skipping patch  no .skin found at {skin_path}")
+        #for coll in utils.get_mesh_export_nodes(self._config.export_selected_nodes):
+        #    for obj in coll.objects:
+        #        if obj.type == 'MESH':
+        #            # Bake the hiding-mask layers
+        #            process_hiding_groups_export(obj)
+        #            # Only patch if the .skin was actually generated
+        #            skin_path = os.path.join(export_dir, f"{obj.name}.skin")
+        #            if skin_path.lower().endswith(".skin") and os.path.exists(skin_path):
+        #                append_hiding_color_chunk(obj, skin_path)
+        #            else:
+        #                print(f"[Hiding Groups] Skipping patch  no .skin found at {skin_path}")
 
         write_scripts(self=self, config=self._config)
 
