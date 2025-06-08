@@ -6,7 +6,7 @@ import json
 from bpy.types import Operator
 from bpy.app.handlers import persistent
 
-dotNET_URL = "https://dotnet.microsoft.com/en-us/download/dotnet/8.0"
+dotNET_URL = "https://dotnet.microsoft.com/en-us/download/dotnet/9.0"
 plugin_Version = ".".join(map(str, __import__("io_KCD2_Blender_Toolkit").bl_info['version']))
 git_API_URL = "https://api.github.com/repos/Caseter/KCD2-Blender-Toolkit/releases/latest"
 git_release_URL = "https://github.com/Caseter/KCD2-Blender-Toolkit/releases/latest"
@@ -76,7 +76,7 @@ class KCD2_OT_OpenUpdateDownload(Operator):
         return {'FINISHED'}
 
 class KCD2_OT_CheckDotNetRuntime(Operator):
-    """Check if .NET Runtime 8.0.0 or higher is installed"""
+    """Check if .NET Runtime 9.0.0 or higher is installed"""
     bl_idname = "kcd2.check_dotnet_runtime"
     bl_label = "Check .NET Runtime"
     bl_options = {'REGISTER', 'UNDO'}
@@ -95,7 +95,7 @@ class KCD2_OT_CheckDotNetRuntime(Operator):
 
             for version in versions:
                 major, minor, patch = map(int, version.split("."))
-                if (major > 8) or (major == 8 and minor >= 0):
+                if (major > 9) or (major == 9 and minor >= 0):
                     return True
 
             return False
@@ -115,7 +115,7 @@ class KCD2_OT_ShowMissingDotNet(Operator):
 
     def draw(self, context):
         layout = self.layout
-        layout.label(text=".NET Core Runtime 8.0.0 or higher")
+        layout.label(text=".NET Core Runtime 9.0.0 or higher")
         layout.label(text=" is required for this plugin to function correctly. ")
         layout.label(text="Please use the link below to install it.")
         layout.operator("kcd2.open_dotnet_download", icon='URL')

@@ -50,8 +50,8 @@ def import_collada(filepath, context, operator):
 
             fix_vertex_colors(mesh)
             #Only runs hiding groups for .skin files. Don't think .cgf uses them.
-            if getattr(operator, "model_type", "") == "skin":
-                process_hiding_groups_import(obj)
+            #if getattr(operator, "model_type", "") == "skin":
+            #    process_hiding_groups_import(obj)
             fix_material_slots(obj, filepath)
             set_smooth(mesh)
             create_export_node(operator)
