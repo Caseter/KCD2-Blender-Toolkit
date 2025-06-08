@@ -3,7 +3,7 @@ Original plugin created by [Lune](https://github.com/LuneMods/KCD2-Blender-Toolk
 
 Uses Kamzik's KCD2 Texture Tool for converting textures from PAK - [GitHub](https://github.com/Kamzik123/KCDTextureExporter)
 
-Cryengine-Converter - Made by Heffay/Markemp and modified by Lune for KCD2 - [GitHub](https://github.com/Markemp/Cryengine-Converter)
+Cryengine-Converter - Made by Heffay/Markemp - [GitHub](https://github.com/Markemp/Cryengine-Converter)
 
 BCRYExporter - Various Authorts - [GitHub](https://github.com/brickengineer/BCRYExporter)
 
