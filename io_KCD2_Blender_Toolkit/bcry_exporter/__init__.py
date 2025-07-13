@@ -182,7 +182,8 @@ class BCRY_OT_add_cry_export_node(bpy.types.Operator):
     )
     node_name: StringProperty(name="Name")
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         object_ = bpy.context.active_object
         self.node_name = object_.name
@@ -190,7 +191,6 @@ class BCRY_OT_add_cry_export_node(bpy.types.Operator):
 
         if object_.type not in ('MESH', 'EMPTY'):
             self.report({'ERROR'}, "Selected object is not a mesh! Please select a mesh object.")
-            return {'FINISHED'}
 
         if object_.parent and object_.parent.type == 'ARMATURE':
             if len(object_.data.vertices) <= 4:
